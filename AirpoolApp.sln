@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5F81910F-FB71-4A40-83CD-9236724B9E8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scanner", "Scanner", "{73045A32-062C-47CE-A816-F5DFBCACFA29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.Core", "src\Scanner\Airpool.Scanner.Core\Airpool.Scanner.Core.csproj", "{51694873-77BE-4396-8BE2-B7A89EFFF9F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.Infrastructure", "src\Scanner\Airpool.Scanner.Infrastructure\Airpool.Scanner.Infrastructure.csproj", "{F8AD97B0-E170-45CA-B947-078E8DBFD9D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.Application", "src\Scanner\Airpool.Scanner.Application\Airpool.Scanner.Application.csproj", "{8755EE33-1E49-4C5B-ACFB-027C4A490C73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.API", "src\Scanner\Airpool.Scanner.API\Airpool.Scanner.API.csproj", "{C19F9FF6-691E-46E2-BB98-272875007E65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51694873-77BE-4396-8BE2-B7A89EFFF9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51694873-77BE-4396-8BE2-B7A89EFFF9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51694873-77BE-4396-8BE2-B7A89EFFF9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51694873-77BE-4396-8BE2-B7A89EFFF9F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8AD97B0-E170-45CA-B947-078E8DBFD9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8AD97B0-E170-45CA-B947-078E8DBFD9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8AD97B0-E170-45CA-B947-078E8DBFD9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8AD97B0-E170-45CA-B947-078E8DBFD9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8755EE33-1E49-4C5B-ACFB-027C4A490C73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8755EE33-1E49-4C5B-ACFB-027C4A490C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8755EE33-1E49-4C5B-ACFB-027C4A490C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8755EE33-1E49-4C5B-ACFB-027C4A490C73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C19F9FF6-691E-46E2-BB98-272875007E65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C19F9FF6-691E-46E2-BB98-272875007E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C19F9FF6-691E-46E2-BB98-272875007E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C19F9FF6-691E-46E2-BB98-272875007E65}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73045A32-062C-47CE-A816-F5DFBCACFA29} = {5F81910F-FB71-4A40-83CD-9236724B9E8E}
+		{51694873-77BE-4396-8BE2-B7A89EFFF9F3} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
+		{F8AD97B0-E170-45CA-B947-078E8DBFD9D1} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
+		{8755EE33-1E49-4C5B-ACFB-027C4A490C73} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
+		{C19F9FF6-691E-46E2-BB98-272875007E65} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8E7206D-C726-4A4D-A27D-F2F9B44265E3}
+	EndGlobalSection
+EndGlobal
