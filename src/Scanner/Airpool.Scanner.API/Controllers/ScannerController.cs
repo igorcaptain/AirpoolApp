@@ -10,6 +10,5 @@ namespace Airpool.Scanner.API.Controllers
     [Route("[controller]")]
     public class ScannerController : ControllerBase
     {
-
     }
 }
