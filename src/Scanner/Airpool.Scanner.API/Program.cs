@@ -16,7 +16,7 @@ namespace Airpool.Scanner.API
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            CreateAndSeedDatabase(host);
+            CreateAndSeedDatabaseAsync(host).Wait();
             host.Run();
         }
 
@@ -27,7 +27,7 @@ namespace Airpool.Scanner.API
                     webBuilder.UseStartup<Startup>();
                 });
 
-        private static void CreateAndSeedDatabase(IHost host)
+        private static async Task CreateAndSeedDatabaseAsync(IHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -37,7 +37,7 @@ namespace Airpool.Scanner.API
                 try
                 {
                     var orderContext = services.GetRequiredService<ScannerContext>();
-                    ScannerContextSeed.SeedAsync(orderContext, loggerFactory);
+                    await ScannerContextSeed.SeedAsync(orderContext, loggerFactory);
                 }
                 catch (Exception ex)
                 {

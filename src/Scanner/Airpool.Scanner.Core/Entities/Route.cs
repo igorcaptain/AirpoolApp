@@ -7,9 +7,9 @@ namespace Airpool.Scanner.Core.Entities
     {
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public Guid StartLocationId { get; set; }
+        public Guid? StartLocationId { get; set; }
         public Location StartLocation { get; set; }
-        public Guid EndLocationId { get; set; }
+        public Guid? EndLocationId { get; set; }
         public Location EndLocation { get; set; }
     }
 }
