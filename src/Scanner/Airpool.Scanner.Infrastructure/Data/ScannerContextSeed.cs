@@ -1,4 +1,6 @@
 ﻿using Airpool.Scanner.Core.Entities;
+using Airpool.Scanner.Infrastructure.Data.ThirdParty.TravelPayouts;
+using Airpool.Scanner.Infrastructure.Data.ThirdParty.TravelPayouts.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,14 +18,12 @@ namespace Airpool.Scanner.Infrastructure.Data
 
             try
             {
-                scannerContext.Database.Migrate();
-
                 if (!scannerContext.Locations.Any()) // if location table is empty -> seed database
                 {
                     scannerContext.CabinClasses.AddRange(GetPreconfiguredCabinClasses());
                     await scannerContext.SaveChangesAsync();
 
-                    scannerContext.Locations.AddRange(GetPreconfiguredLocations());
+                    scannerContext.Locations.AddRange(await GetLocationsFromApi());
                     await scannerContext.SaveChangesAsync();
 
                     scannerContext.Flights.AddRange(await GetPreconfiguredFlights(scannerContext));
@@ -114,6 +114,20 @@ namespace Airpool.Scanner.Infrastructure.Data
             };
         }
 
+        #endregion
+
+        #region GetThirdPartyData
+        private static async Task<IEnumerable<Location>> GetLocationsFromApi() =>
+            (await (new TravelPayoutsReader()).GetLocations())
+            .Select(tl => new Location() 
+            {
+                AirportName = tl.AirportName,
+                IATA = tl.IATA,
+                Country = tl.Country,
+                City = tl.City,
+                Latitude = tl.Latitude,
+                Longitude = tl.Longitude
+            });
         #endregion
     }
 }

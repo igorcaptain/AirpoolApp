@@ -1,12 +1,15 @@
-﻿using Airpool.Scanner.Core.Entities.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Airpool.Scanner.Core.Entities
+namespace Airpool.Scanner.Infrastructure.Data.ThirdParty.TravelPayouts.Entities
 {
-    public class Location : Entity
+    public class TravelPayoutsLocation
     {
         public string Name { get; set; }
         public string AirportName { get; set; }
-        //public string TerminalName { get; set; }
         public string IATA { get; set; }
         // geo
         public string Country { get; set; }
