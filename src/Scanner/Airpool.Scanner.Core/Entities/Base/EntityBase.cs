@@ -33,7 +33,9 @@ namespace Airpool.Scanner.Core.Entities.Base
             if (item.IsTransient() || IsTransient())
                 return false;
             else
-                return item == this;
+                return item.GetHashCode() == this.GetHashCode();
+            //else
+            //    return item == this;
         }
 
         public override int GetHashCode()
@@ -50,10 +52,7 @@ namespace Airpool.Scanner.Core.Entities.Base
 
         public static bool operator ==(EntityBase<TId> left, EntityBase<TId> right)
         {
-            if (Equals(left, null))
-                return Equals(right, null) ? true : false;
-            else
-                return left.Equals(right);
+            return Equals(left, null) ? Equals(right, null) : left.Equals(right);
         }
 
         public static bool operator !=(EntityBase<TId> left, EntityBase<TId> right)
