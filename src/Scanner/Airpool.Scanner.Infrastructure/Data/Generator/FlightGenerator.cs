@@ -17,11 +17,6 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        //public GeoPoint ToRadian()
-        //{
-        //    return new GeoPoint() { Latitude = Latitude * Math.PI / 180, Longitude = Longitude * Math.PI / 180 };
-        //}
-
         public double DistanceTo(GeoPoint point)
         {
             return GetDistance(this.Latitude, this.Longitude, point.Latitude, point.Longitude);
@@ -141,7 +136,7 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
             {
                 Name = location1.IATA + "-" + location2.IATA,
                 StartDateTime = startDate,
-                EndDateTime = startDate.AddHours(Options.Boeing767.Speed / distanceKm * 1.6),
+                EndDateTime = startDate.AddHours(Options.Boeing767.Speed / distanceKm * 1.4),
                 StartLocationId = location1.Id,
                 EndLocationId = location2.Id
             };

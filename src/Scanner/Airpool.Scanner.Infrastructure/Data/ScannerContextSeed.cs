@@ -18,27 +18,29 @@ namespace Airpool.Scanner.Infrastructure.Data
 
             try
             {
+                if (!scannerContext.CabinClasses.Any())
+                {
+                    scannerContext.CabinClasses.AddRange(GetPreconfiguredCabinClasses());
+                    await scannerContext.SaveChangesAsync();
+                }
+
+                if (!scannerContext.Locations.Any())
+                {
+                    scannerContext.Locations.AddRange(await GetLocationsFromApi());
+                    await scannerContext.SaveChangesAsync();
+                }
+
                 if (!scannerContext.Flights.Any())
                 {
                     scannerContext.Flights.AddRange(entityGenerator.GenerateRandomEntities(await scannerContext.Locations.ToListAsync(), 20000));
                     await scannerContext.SaveChangesAsync();
                 }
 
-                if (!scannerContext.Locations.Any()) // if location table is empty -> seed database
+                if (!scannerContext.Tickets.Any())
                 {
-                    scannerContext.CabinClasses.AddRange(GetPreconfiguredCabinClasses());
-                    await scannerContext.SaveChangesAsync();
-
-                    scannerContext.Locations.AddRange(await GetLocationsFromApi());
-                    await scannerContext.SaveChangesAsync();
-
-                    scannerContext.Flights.AddRange(await GetPreconfiguredFlights(scannerContext));
-                    await scannerContext.SaveChangesAsync();
-
                     scannerContext.Tickets.AddRange(await GetPreconfiguredTickets(scannerContext));
                     await scannerContext.SaveChangesAsync();
                 }
-                
             }
             catch (Exception ex)
             {

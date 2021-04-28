@@ -34,8 +34,6 @@ namespace Airpool.Scanner.Core.Entities.Base
                 return false;
             else
                 return item.GetHashCode() == this.GetHashCode();
-            //else
-            //    return item == this;
         }
 
         public override int GetHashCode()
