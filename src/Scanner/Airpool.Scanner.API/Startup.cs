@@ -12,6 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
+using Airpool.Scanner.Infrastructure.Repositories.Base;
+using Airpool.Scanner.Core.Repository.Base;
+using Airpool.Scanner.Infrastructure.Data.Generator;
+using Airpool.Scanner.Core.Generator.Base;
+using Airpool.Scanner.Core.Entities;
 
 namespace Airpool.Scanner.API
 {
@@ -31,6 +36,10 @@ namespace Airpool.Scanner.API
 
             services.AddDbContext<ScannerContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("ScannerConnection")), ServiceLifetime.Singleton);
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddTransient<IEntityGenerator<Flight, Location>, FlightGenerator>();
 
             services.AddSwaggerGen(c =>
             {

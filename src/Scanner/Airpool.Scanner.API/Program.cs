@@ -1,3 +1,5 @@
+using Airpool.Scanner.Core.Entities;
+using Airpool.Scanner.Core.Generator.Base;
 using Airpool.Scanner.Infrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,7 +39,8 @@ namespace Airpool.Scanner.API
                 try
                 {
                     var orderContext = services.GetRequiredService<ScannerContext>();
-                    await ScannerContextSeed.SeedAsync(orderContext, loggerFactory);
+                    var generator = services.GetRequiredService<IEntityGenerator<Flight, Location>>();
+                    await ScannerContextSeed.SeedAsync(orderContext, loggerFactory, generator);
                 }
                 catch (Exception ex)
                 {

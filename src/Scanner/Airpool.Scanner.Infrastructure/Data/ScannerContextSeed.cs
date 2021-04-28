@@ -1,6 +1,6 @@
 ﻿using Airpool.Scanner.Core.Entities;
+using Airpool.Scanner.Core.Generator.Base;
 using Airpool.Scanner.Infrastructure.Data.ThirdParty.TravelPayouts;
-using Airpool.Scanner.Infrastructure.Data.ThirdParty.TravelPayouts.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,27 +12,35 @@ namespace Airpool.Scanner.Infrastructure.Data
 {
     public class ScannerContextSeed
     {
-        public static async Task SeedAsync(ScannerContext scannerContext, ILoggerFactory loggerFactory, int? retry = 0)
+        public static async Task SeedAsync(ScannerContext scannerContext, ILoggerFactory loggerFactory, IEntityGenerator<Flight, Location> entityGenerator, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
 
             try
             {
-                if (!scannerContext.Locations.Any()) // if location table is empty -> seed database
+                if (!scannerContext.CabinClasses.Any())
                 {
                     scannerContext.CabinClasses.AddRange(GetPreconfiguredCabinClasses());
                     await scannerContext.SaveChangesAsync();
+                }
 
+                if (!scannerContext.Locations.Any())
+                {
                     scannerContext.Locations.AddRange(await GetLocationsFromApi());
                     await scannerContext.SaveChangesAsync();
+                }
 
-                    scannerContext.Flights.AddRange(await GetPreconfiguredFlights(scannerContext));
+                if (!scannerContext.Flights.Any())
+                {
+                    scannerContext.Flights.AddRange(entityGenerator.GenerateRandomEntities(await scannerContext.Locations.ToListAsync(), 20000));
                     await scannerContext.SaveChangesAsync();
+                }
 
+                if (!scannerContext.Tickets.Any())
+                {
                     scannerContext.Tickets.AddRange(await GetPreconfiguredTickets(scannerContext));
                     await scannerContext.SaveChangesAsync();
                 }
-                
             }
             catch (Exception ex)
             {
@@ -41,7 +49,7 @@ namespace Airpool.Scanner.Infrastructure.Data
                     retryForAvailability++;
                     var log = loggerFactory.CreateLogger<ScannerContextSeed>();
                     log.LogError(ex.Message);
-                    await SeedAsync(scannerContext, loggerFactory, retryForAvailability);
+                    await SeedAsync(scannerContext, loggerFactory, entityGenerator, retryForAvailability);
                 }
             }
         }
