@@ -34,6 +34,8 @@ namespace Airpool.Scanner.API
         {
             services.AddControllers();
 
+            //services.AddCors();
+
             services.AddDbContext<ScannerContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("ScannerConnection")), ServiceLifetime.Singleton);
 
@@ -58,6 +60,10 @@ namespace Airpool.Scanner.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            //app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
 
             app.UseEndpoints(endpoints =>
             {

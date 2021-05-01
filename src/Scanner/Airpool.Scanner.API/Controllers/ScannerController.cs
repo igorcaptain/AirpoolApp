@@ -15,7 +15,7 @@ namespace Airpool.Scanner.API.Controllers
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<string>> HelloMessage()
         {
-            return Ok(await Task.Run(() => "hello, world"));
+            return Ok(await Task.Run(() => new JsonResult("hello, world!")));
         }
     }
 }
