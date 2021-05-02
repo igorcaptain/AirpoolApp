@@ -49,6 +49,7 @@ namespace Airpool.Scanner.API
             //https://stackoverflow.com/questions/56415440/the-program-is-not-able-to-find-handler-for-mediatr-query-asp-net-core
             var assembly = AppDomain.CurrentDomain.Load("Airpool.Scanner.Application");
             services.AddMediatR(assembly);
+            services.AddAutoMapper(assembly);
 
             services.AddSwaggerGen(c =>
             {

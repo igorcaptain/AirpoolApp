@@ -2,9 +2,6 @@
 using Airpool.Scanner.Core.Entities.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -23,9 +20,9 @@ namespace Airpool.Scanner.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<string>> HelloMessage()
+        public async Task<ActionResult<string>> Healthcheck()
         {
-            return Ok(await Task.Run(() => new JsonResult("hello, world!")));
+            return Ok(await Task.Run(() => new JsonResult("Ok")));
         }
 
         [HttpGet]
@@ -40,6 +37,15 @@ namespace Airpool.Scanner.API.Controllers
             //    ReturnDateTime = DateTime.Parse("2021-05-16")
             //};
             var query = new GetFilteredFlightsQuery(flightFilter);
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("locations")]
+        public async Task<IActionResult> GetLocations()
+        {
+            var query = new GetLocationsQuery();
             var result = await _mediator.Send(query);
             return Ok(result);
         }

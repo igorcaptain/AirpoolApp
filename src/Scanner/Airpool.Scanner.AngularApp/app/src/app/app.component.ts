@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
 
   serverString: string = "";
+  locations: any[] = [];
   subscriptions: Subscription[] = [];
   
   constructor(private httpClient: HttpClient) { }
@@ -17,6 +18,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(this.httpClient.get("/api/v1/Scanner")
       .subscribe((response: any) => this.serverString = response?.value)
+    );
+
+    this.subscriptions.push(this.httpClient.get("/api/v1/Scanner/locations")
+      .subscribe((response: any) => this.locations = response)
     );
   }
 

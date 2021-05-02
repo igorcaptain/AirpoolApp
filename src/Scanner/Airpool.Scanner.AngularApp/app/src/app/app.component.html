@@ -1,1 +1,5 @@
-<p>String from server: {{ serverString }}</p>
+<p>Healthcheck: {{ serverString }}</p>
+
+<select name="locations" id="locations">
+    <option *ngFor="let location of locations" value="location.id">{{location.country + " - " + location.city}}</option>
+</select>
