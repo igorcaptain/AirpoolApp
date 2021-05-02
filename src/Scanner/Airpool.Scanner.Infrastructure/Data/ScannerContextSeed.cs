@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace Airpool.Scanner.Infrastructure.Data
 
                 if (!scannerContext.Flights.Any())
                 {
-                    scannerContext.Flights.AddRange(entityGenerator.GenerateRandomEntities(await scannerContext.Locations.ToListAsync(), 20000));
+                    scannerContext.Flights.AddRange(await entityGenerator.GenerateRandomEntities(await scannerContext.Locations.ToListAsync(), 500000));
                     await scannerContext.SaveChangesAsync();
                 }
 

@@ -38,9 +38,9 @@ namespace Airpool.Scanner.API
 
                 try
                 {
-                    var orderContext = services.GetRequiredService<ScannerContext>();
                     var generator = services.GetRequiredService<IEntityGenerator<Flight, Location>>();
-                    await ScannerContextSeed.SeedAsync(orderContext, loggerFactory, generator);
+                    var scannerContext = services.GetRequiredService<ScannerContext>();
+                    await ScannerContextSeed.SeedAsync(scannerContext, loggerFactory, generator);
                 }
                 catch (Exception ex)
                 {
