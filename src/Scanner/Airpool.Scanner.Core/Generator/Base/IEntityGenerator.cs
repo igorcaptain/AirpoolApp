@@ -11,7 +11,7 @@ namespace Airpool.Scanner.Core.Generator.Base
         where T : Entity 
         where K : Entity
     {
-        T GenerateRandomEntity(IList<K> collection = null);
-        IList<T> GenerateRandomEntities(IList<K> collection = null, int count = 1);
+        T GenerateRandomEntity(IList<K> collection);
+        Task<IList<T>> GenerateRandomEntities(IList<K> collection, int count = 1);
     }
 }

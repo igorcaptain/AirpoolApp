@@ -17,6 +17,9 @@ using Airpool.Scanner.Core.Repository.Base;
 using Airpool.Scanner.Infrastructure.Data.Generator;
 using Airpool.Scanner.Core.Generator.Base;
 using Airpool.Scanner.Core.Entities;
+using MediatR;
+using Airpool.Scanner.Application.Handlers;
+using System.Reflection;
 
 namespace Airpool.Scanner.API
 {
@@ -42,6 +45,10 @@ namespace Airpool.Scanner.API
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddTransient<IEntityGenerator<Flight, Location>, FlightGenerator>();
+
+            //https://stackoverflow.com/questions/56415440/the-program-is-not-able-to-find-handler-for-mediatr-query-asp-net-core
+            var assembly = AppDomain.CurrentDomain.Load("Airpool.Scanner.Application");
+            services.AddMediatR(assembly);
 
             services.AddSwaggerGen(c =>
             {

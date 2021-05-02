@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace Airpool.Scanner.Infrastructure.Data
 
                 if (!scannerContext.Flights.Any())
                 {
-                    scannerContext.Flights.AddRange(entityGenerator.GenerateRandomEntities(await scannerContext.Locations.ToListAsync(), 20000));
+                    scannerContext.Flights.AddRange(await entityGenerator.GenerateRandomEntities(await scannerContext.Locations.ToListAsync(), 500000));
                     await scannerContext.SaveChangesAsync();
                 }
 
@@ -60,7 +61,9 @@ namespace Airpool.Scanner.Infrastructure.Data
         {
             return new List<CabinClass>()
             {
-                new CabinClass() { Name = "Econom" }
+                new CabinClass() { Name = "Economy" },
+                new CabinClass() { Name = "Business" },
+                new CabinClass() { Name = "First" }
             };
         }
 
@@ -107,12 +110,11 @@ namespace Airpool.Scanner.Infrastructure.Data
 
         private static async Task<IEnumerable<Ticket>> GetPreconfiguredTickets(ScannerContext scannerContext)
         {
-            IList<Flight> flights = await scannerContext.Flights.ToListAsync();
             return new List<Ticket>()
             {
                 new Ticket()
                 {
-                    FlightId = flights.Where(f => f.Name == "TestFlight#1337").FirstOrDefault().Id,
+                    FlightId = scannerContext.Flights.Include(f => f.StartLocation).Where(f => f.StartLocation.Country == "Ukraine").FirstOrDefault().Id,
                     CabinClassId = 1,
                     PassengerFirstName = "Valerii",
                     PassengerLastName = "Zhmyshenko",

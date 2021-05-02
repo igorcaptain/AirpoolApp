@@ -88,21 +88,42 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
 
     public class FlightGenerator : IEntityGenerator<Flight, Location>
     {
-        public IList<Flight> GenerateRandomEntities(IList<Location> locations, int count = 1)
+        public async Task<IList<Flight>> GenerateRandomEntities(IList<Location> locations, int count = 1)
         {
+            var filteredLocations = locations.Where(l => Options.FlightableRect.isInclude(l.Latitude, l.Longitude)).ToList();
             List<Flight> flights = new();
-            int attempt = 0;
+            var dateTime = DateTime.Now;
 
-            while (flights.Count() < count && attempt <= 100)
+            int taskCount = 10;
+            var tasks = Enumerable.Range(0, taskCount).Select(x =>
             {
-                var flight = GenerateRandomEntity(locations);
-                if (!flights.Contains(flight))
+                return Task.Run(() =>
                 {
-                    flights.Add(flight);
-                    attempt = 0;
-                }
-                else
-                    attempt++;
+                    List<Flight> chunkFlights = new();
+                    int attempt = 0;
+                    Random random = new Random();
+
+                    while ((chunkFlights.Count() < count / taskCount) && attempt <= 100)
+                    {
+                        var flight = GenerateRandomEntity(filteredLocations, dateTime, random);
+                        if (!chunkFlights.Contains(flight))
+                        {
+                            chunkFlights.Add(flight);
+                            attempt = 0;
+                        }
+                        else
+                            attempt++;
+                    }
+
+                    return chunkFlights;
+                });
+            }).ToList();
+
+            while(tasks.Any())
+            {
+                var finishedTask = await Task.WhenAny(tasks);
+                tasks.Remove(finishedTask);
+                flights.AddRange(await finishedTask);   
             }
 
             return flights;
@@ -110,44 +131,48 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
 
         public Flight GenerateRandomEntity(IList<Location> locations)
         {
-            var filteredLocations = locations.Where(l => Options.FlightableRect.isInclude(l.Latitude, l.Longitude));
-            
             Random random = new Random();
+            var filteredLocations = locations.Where(l => Options.FlightableRect.isInclude(l.Latitude, l.Longitude)).ToList();
+            return GenerateRandomEntity(filteredLocations, DateTime.Now, random);
+        }
+
+        private Flight GenerateRandomEntity(IList<Location> locations, DateTime seedDateTime, Random random)
+        {
             int attempt = 0;
+            double distance;
             Location location1, location2;
 
             while (true)
             {
-                location1 = filteredLocations.ElementAt(random.Next(0, filteredLocations.Count()));
-                location2 = filteredLocations.ElementAt(random.Next(0, filteredLocations.Count()));
+                location1 = locations.ElementAt(random.Next(0, locations.Count()));
+                location2 = locations.ElementAt(random.Next(0, locations.Count()));
+                distance = GeoPoint.GetDistance((double)location1.Latitude, (double)location1.Longitude, (double)location2.Latitude, (double)location2.Longitude);
 
-                if (ValidateLocations(location1, location2) || attempt++ >= 20)
+                if (ValidateLocations(location1, location2, distance) || attempt++ >= 100)
                     break;
             }
 
-            DateTime startDate = DateTime.Now
+            DateTime startDate = seedDateTime
                 .AddDays(random.Next(1, 30))
                 .AddHours(random.Next(0, 24))
                 .AddMinutes(random.Next(0, 60));
-            var distanceKm = GeoPoint.GetDistance((double)location1.Latitude, (double)location1.Longitude, (double)location2.Latitude, (double)location2.Longitude) / 1000;
 
+            var distanceKm = distance / 1000;
 
             var flight = new Flight()
             {
                 Name = location1.IATA + "-" + location2.IATA,
                 StartDateTime = startDate,
-                EndDateTime = startDate.AddHours(Options.Boeing767.Speed / distanceKm * 1.4),
+                EndDateTime = startDate.AddHours((distanceKm != 0) ? Options.Boeing767.Speed / distanceKm * 1.4 : 0),
                 StartLocationId = location1.Id,
                 EndLocationId = location2.Id
             };
-            
 
             return flight;
         }
 
-        private bool ValidateLocations(Location location1, Location location2)
+        private bool ValidateLocations(Location location1, Location location2, double distance)
         {
-            var distance = GeoPoint.GetDistance((double)location1.Latitude, (double)location1.Longitude, (double)location2.Latitude, (double)location2.Longitude);
             double maxDistance = Options.Boeing767.Range;
             bool isValid = location1 != location2 && distance <= maxDistance;
             return isValid;

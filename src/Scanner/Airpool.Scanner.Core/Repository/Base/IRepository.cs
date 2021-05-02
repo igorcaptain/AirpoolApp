@@ -15,13 +15,13 @@ namespace Airpool.Scanner.Core.Repository.Base
         Task<IReadOnlyList<T>> GetAsync(
             Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeString = null,
-            bool disableTracking = true);
+            bool disableTracking = true,
+            string includeString = null);
         Task<IReadOnlyList<T>> GetAsync(
             Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            List<Expression<Func<T, object>>> includes = null,
-            bool disableTracking = true);
+            bool disableTracking = true,
+            params Expression<Func<T, object>>[] includes);
         Task<T> GetByIdAsync(Guid id);
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
