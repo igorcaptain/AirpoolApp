@@ -60,7 +60,9 @@ namespace Airpool.Scanner.Infrastructure.Data
         {
             return new List<CabinClass>()
             {
-                new CabinClass() { Name = "Econom" }
+                new CabinClass() { Name = "Economy" },
+                new CabinClass() { Name = "Business" },
+                new CabinClass() { Name = "First" }
             };
         }
 
@@ -107,12 +109,11 @@ namespace Airpool.Scanner.Infrastructure.Data
 
         private static async Task<IEnumerable<Ticket>> GetPreconfiguredTickets(ScannerContext scannerContext)
         {
-            IList<Flight> flights = await scannerContext.Flights.ToListAsync();
             return new List<Ticket>()
             {
                 new Ticket()
                 {
-                    FlightId = flights.Where(f => f.Name == "TestFlight#1337").FirstOrDefault().Id,
+                    FlightId = scannerContext.Flights.Include(f => f.StartLocation).Where(f => f.StartLocation.Country == "Ukraine").FirstOrDefault().Id,
                     CabinClassId = 1,
                     PassengerFirstName = "Valerii",
                     PassengerLastName = "Zhmyshenko",
