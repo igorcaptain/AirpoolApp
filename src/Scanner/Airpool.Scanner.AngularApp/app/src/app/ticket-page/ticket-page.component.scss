@@ -28,6 +28,9 @@
             .city{
                 color: #d76868;
             }
+            .icon-plane::before{
+                content: url('../../assets/pink-plane.png')
+            }
         }
     }
 }
