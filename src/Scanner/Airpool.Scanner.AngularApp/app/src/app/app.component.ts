@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { IconService } from './services/icon.service';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,14 @@ export class AppComponent implements OnInit, OnDestroy {
   locations: any[] = [];
   subscriptions: Subscription[] = [];
   
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private iconService: IconService
+  ) { }
 
   ngOnInit(): void {
+    this.iconService.registerIcons();
+    
     this.subscriptions.push(this.httpClient.get("/api/v1/Scanner")
       .subscribe((response: any) => this.serverString = response?.value)
     );
