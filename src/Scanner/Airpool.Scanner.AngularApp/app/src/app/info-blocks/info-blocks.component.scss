@@ -1,0 +1,24 @@
+.flex-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.info-block{
+    font-size: 1.1rem;
+    font-weight: lighter;
+    color: #fff;
+    background-color: #3f4554;
+    border-radius: 5px;
+    width: 400px;
+    height: 240px;
+    margin-right: 35px;
+    padding: 30px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #3f4554c2;
+    }
+}
+.info-block:last-child{
+    margin-right: 0;
+}

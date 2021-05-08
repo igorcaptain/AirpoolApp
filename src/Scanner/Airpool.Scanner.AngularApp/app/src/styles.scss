@@ -1,0 +1,83 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$app-primary: mat-palette($mat-indigo);
+$app-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$app-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$app-theme: mat-light-theme((
+  color: (
+    primary: $app-primary,
+    accent: $app-accent,
+    warn: $app-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($app-theme);
+
+/* You can add global styles to this file, and also import other style files */
+*{
+  box-sizing: border-box;
+}
+html, body { height: 100%; background-color: #272a33!important; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// body{
+//   background-color: #ffda0d!important;
+// }
+#logo{
+  float: left;
+  //margin-top:20px;
+  font-size: 30px;
+  display: inline-block;
+  color:#d76868;
+}
+.header{
+  width:100%;
+  height:72px;
+  background-color: #191e27;
+
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+}
+.wrap{
+  //background-color: #ffda0d;
+  width: 1350px;
+  margin: 0 auto;
+  height: auto;
+}
+.wrap-right{
+  float:right;
+}
+
+::ng-deep{
+  mat-toolbar{
+      background-color: #fff!important;
+      border-bottom: 1px solid rgb(202, 202, 202)!important;
+  }
+  .wrap{
+      width: 1350px;
+      margin: 0 auto;
+      height: auto;
+  }
+}

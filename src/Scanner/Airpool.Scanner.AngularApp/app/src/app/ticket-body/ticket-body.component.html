@@ -1,0 +1,71 @@
+<!-- <div class="ticket-body bordered">
+    <div class="info-line bordered">
+        <span class="info-text city">Kyiv</span>
+        <span class="airport">Zhulyani</span>
+    </div>
+    <div class="info-line bordered">
+        <span class="city">Barcelona</span>
+        <span class="airport">Zalupyani</span>
+    </div>
+    <div class="body-main">
+        <div class="icon-place">
+            <span class="icon-plane"></span>
+        </div>
+        <div class="info-line">
+            <div class="date-time info-line">
+                <div class="time">9:45</div>
+                <div class="date info-text">date</div>
+            </div>
+            <div class="date-time info-line">
+                <div class="time-in-road">time-in-road</div>
+                <div class="info-text">ticket-class</div>
+            </div>
+        </div>
+        <div class="info-line">
+            <div class="date-time info-line">
+                <div class="time">9:45</div>
+                <div class="date info-text">date</div>
+            </div>
+            <div class="date-time info-line">
+                <div class="time-in-road">time-in-road</div>
+                <div class="info-text">ticket-class</div>
+            </div>
+        </div>
+        </div>
+</div> -->
+
+<div class="ticket-body bordered">
+    <div class="info-line bordered">
+        <span class="info-text city">{{ flightData!.startLocationCity }}</span>
+        <span class="airport">{{ flightData!.startLocationAirportName }}</span>
+    </div>
+    <div class="info-line bordered">
+        <span class="city">{{ flightData!.endLocationCity }}</span>
+        <span class="airport">{{ flightData!.endLocationAirportName }}</span>
+    </div>
+    <div class="body-main">
+        <div class="icon-place">
+            <span class="icon-plane"></span>
+        </div>
+        <div class="info-line">
+            <div class="date-time info-line">
+                <div class="time">{{ flightData!.startDateTime | date:'HH:mm' }}</div>
+                <div class="date info-text">{{ flightData!.startDateTime | date:'d MMM, EEEE' }}</div>
+            </div>
+            <div class="date-time info-line">
+                <div class="time-in-road">{{ flightTime }}</div>
+                <div class="info-text">Economy</div>
+            </div>
+        </div>
+        <div class="info-line">
+            <div class="date-time info-line">
+                <div class="time">{{ flightData!.endDateTime | date:'HH:mm' }}</div>
+                <div class="date info-text">{{ flightData!.endDateTime | date:'d MMM, EEEE' }}</div>
+            </div>
+            <div class="date-time info-line">
+                <div class="time-in-road">{{ flightData!.name }}</div>
+                <div class="info-text">Boeing-767</div>
+            </div>
+        </div>
+        </div>
+</div>

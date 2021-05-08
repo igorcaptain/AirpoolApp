@@ -1,0 +1,12 @@
+<div class="ticket">
+    <div class="ticket-header bordered">
+        <div class="company-name">Lufthansa airlines</div>
+        <div class="price-block">
+            <div class="price">Book</div>
+            <span></span>
+        </div>
+    </div>
+
+    <app-ticket-body [flightData]="departureFlight"></app-ticket-body>
+    <app-ticket-body *ngIf="arrivalFlight" [flightData]="arrivalFlight"></app-ticket-body>
+</div>

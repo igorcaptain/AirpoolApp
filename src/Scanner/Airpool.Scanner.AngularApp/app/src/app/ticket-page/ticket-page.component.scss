@@ -1,0 +1,40 @@
+.sight-div{
+    width:30%;
+    height: calc(100vh-72px);
+    background-color: #3f4554;
+    border-right: 20px solid #272a33;
+}
+.ticket-div{
+    width:70%;
+}
+.flight-count{
+    padding: 15px 0;
+    color: #8f9197;
+    font-size: 0.9rem;
+    width:100%;
+    text-align: center;
+    span{
+        color: #fff;
+    }
+}
+
+.ticket-div::ng-deep{
+    .ticket{
+        margin-bottom: 15px;
+        app-ticket-body:nth-child(odd){
+            .ticket-body {
+                border-left: 4px solid #d76868;
+            }
+            .city{
+                color: #d76868;
+            }
+            .icon-plane::before{
+                content: url('../../assets/pink-plane.png')
+            }
+        }
+    }
+}
+
+.wrap {
+    margin-top: 20px;
+}

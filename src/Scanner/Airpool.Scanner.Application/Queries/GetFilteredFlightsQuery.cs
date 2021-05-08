@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Airpool.Scanner.Application.Queries
 {
-    public class GetFilteredFlightsQuery : IRequest<List<FilteredFlightResponse>> 
+    public class GetFilteredFlightsQuery : IRequest<FilteredFlightResponse> 
     {
         public FlightFilter FlightFilter { get; }
 
