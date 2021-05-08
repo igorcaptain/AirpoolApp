@@ -1,4 +1,5 @@
-﻿using Airpool.Scanner.Application.Queries;
+﻿using Airpool.Scanner.Application.Options;
+using Airpool.Scanner.Application.Queries;
 using Airpool.Scanner.Core.Entities.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,16 +28,9 @@ namespace Airpool.Scanner.API.Controllers
 
         [HttpGet]
         [Route("flights")]
-        public async Task<IActionResult> FindFlights([FromQuery] FlightFilter flightFilter)
+        public async Task<IActionResult> FindFlights([FromQuery] FlightFilter flightFilter, [FromQuery] SearchOption searchOption = SearchOption.Default)
         {
-            //flightFilter = new FlightFilter()
-            //{
-            //    OriginLocationId = Guid.Parse("B0C7540C-C2D8-452A-E7AC-08D90CEDEDC1"),
-            //    OriginDateTime = DateTime.Parse("2021-05-15"),
-            //    DestinationLocationId = Guid.Parse("39AF7DFF-C281-4709-E564-08D90CEDEDC1"),
-            //    ReturnDateTime = DateTime.Parse("2021-05-16")
-            //};
-            var query = new GetFilteredFlightsQuery(flightFilter);
+            var query = new GetFilteredFlightsQuery(flightFilter, searchOption);
             var result = await _mediator.Send(query);
             return Ok(result);
         }

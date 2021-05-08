@@ -21,13 +21,13 @@
         </div>
         <div class="form-element">
             <label>OPTION</label>
-            <app-input-select></app-input-select>
+            <app-input-select (selectChange)="onSearchOptionChange($event)"></app-input-select>
         </div>
     </div>
     <div class="composite-root">Search composite route <span>- coming soon!</span></div>
     <a 
         [routerLink]="'result'" 
-        [queryParams]="flightFilter" 
+        [queryParams]="getQueryParams()" 
         class="search-submit-btn"
         [class.disabled]="!isInputValid()"
     >Search</a>

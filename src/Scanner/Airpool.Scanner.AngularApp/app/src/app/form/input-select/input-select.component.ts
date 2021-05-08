@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SearchOption } from 'src/app/models';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { SearchOption, SearchOptionEnum } from 'src/app/models';
 
 @Component({
   selector: 'app-input-select',
@@ -9,15 +9,20 @@ import { SearchOption } from 'src/app/models';
 export class InputSelectComponent implements OnInit {
   
   searchOptions: SearchOption[] = [
-    { id: 1, name: 'Default' },
-    { id: 2, name: 'From cache' },
-    { id: 3, name: 'Greedy' },
+    { id: SearchOptionEnum.Default, name: 'Default' },
+    { id: SearchOptionEnum.FromCache, name: 'From cache' },
+    { id: SearchOptionEnum.Greedy, name: 'Greedy' },
   ];
   selectedId = 1;
+
+  @Output() selectChange = new EventEmitter<SearchOptionEnum>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onSelectionChange(): void {
+    this.selectChange.emit(this.selectedId);
+  }
 }

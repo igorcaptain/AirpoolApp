@@ -2,6 +2,7 @@
 using Airpool.Scanner.Application.Queries;
 using Airpool.Scanner.Application.Responses;
 using Airpool.Scanner.Core.Entities;
+using Airpool.Scanner.Core.Entities.Filters;
 using Airpool.Scanner.Core.Repository.Base;
 using MediatR;
 using System;
@@ -24,8 +25,30 @@ namespace Airpool.Scanner.Application.Handlers
 
         public async Task<FilteredFlightResponse> Handle(GetFilteredFlightsQuery request, CancellationToken cancellationToken)
         {
+            FilteredFlightResponse result = new FilteredFlightResponse();
+            switch (request.SearchOption)
+            {
+                case Options.SearchOption.Default: 
+                    result = await GetFilteredFlightResponseDefault(request.FlightFilter);
+                    break;
+                case Options.SearchOption.FromCache:
+                    result = await GetFilteredFlightResponseFromCache(request.FlightFilter);
+                    break;
+                case Options.SearchOption.Greedy: 
+                    break;
+            }
+            return result;
+        }
+
+        private async Task<FilteredFlightResponse> GetFilteredFlightResponseDefault(FlightFilter filter)
+        {
+            return null;
+        }
+
+        private async Task<FilteredFlightResponse> GetFilteredFlightResponseFromCache(FlightFilter filter)
+        {
             FilteredFlightResponse result;
-            var filter = request.FlightFilter;
+            //var filter = request.FlightFilter;
 
             var filteredDepartureFlights = await _flightsRepository.GetAsync(f =>
                 f.StartLocationId == filter.OriginLocationId &&
@@ -61,7 +84,7 @@ namespace Airpool.Scanner.Application.Handlers
                     Arrival = null
                 };
             }
-            
+
             return result;
         }
     }
