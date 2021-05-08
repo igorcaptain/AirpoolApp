@@ -1,0 +1,28 @@
+input {
+    border: none;
+    outline: none;
+    padding: 0;
+    margin-top: 5px;
+}
+
+::ng-deep .cdk-overlay-pane {
+    width: 230px !important;
+}
+
+.picker-toggle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+
+    cursor: pointer;
+    font-size: 20px;
+}
+
+:host {
+    display: flex;
+    align-items: center;
+}
+
+::ng-deep .mat-date-range-input-container {
+    align-items: unset !important;
+}

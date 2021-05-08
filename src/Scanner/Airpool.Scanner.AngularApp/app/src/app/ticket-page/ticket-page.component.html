@@ -2,8 +2,14 @@
 <div class="wrap" style="display: flex">
     <div class="sight-div"></div>
     <div class="ticket-div">
-        <div class="flight-count">Всього <span>343</span> перельоту</div>
-        <app-ticket></app-ticket>
-        <app-ticket></app-ticket>
+        <div class="flight-count"><span>{{ departureFlights.length + arrivalFlights.length }}</span> flights total</div>
+
+        <!-- <app-ticket></app-ticket>
+        <app-ticket></app-ticket> -->
+
+        <app-ticket *ngFor="let depFlight of departureFlights; let i = index"
+            [departureFlight]="depFlight"
+            [arrivalFlight]="arrivalFlights[i]"
+        ></app-ticket>
     </div>
 </div>

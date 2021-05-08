@@ -39,3 +39,45 @@ $app-theme: mat-light-theme((
 }
 html, body { height: 100%; background-color: #272a33!important; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// body{
+//   background-color: #ffda0d!important;
+// }
+#logo{
+  float: left;
+  //margin-top:20px;
+  font-size: 30px;
+  display: inline-block;
+  color:#d76868;
+}
+.header{
+  width:100%;
+  height:72px;
+  background-color: #191e27;
+
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+}
+.wrap{
+  //background-color: #ffda0d;
+  width: 1350px;
+  margin: 0 auto;
+  height: auto;
+}
+.wrap-right{
+  float:right;
+}
+
+::ng-deep{
+  mat-toolbar{
+      background-color: #fff!important;
+      border-bottom: 1px solid rgb(202, 202, 202)!important;
+  }
+  .wrap{
+      width: 1350px;
+      margin: 0 auto;
+      height: auto;
+  }
+}

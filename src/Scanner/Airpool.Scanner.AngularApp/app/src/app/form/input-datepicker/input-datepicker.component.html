@@ -1,0 +1,24 @@
+
+<!--VARIANT WITH RANGE-->
+<!--
+<mat-date-range-input [rangePicker]="picker">
+    <input matStartDate placeholder="Start date">
+    <input matEndDate placeholder="End date">
+    </mat-date-range-input>
+
+<mat-date-range-picker #picker></mat-date-range-picker>
+<div class="picker-toggle" (click)="picker.open()">
+    <mat-icon [inline]="true">keyboard_arrow_down</mat-icon>
+</div>
+-->
+
+
+<input
+    placeholder="Select date"
+    [formControl]="control"
+    [matDatepicker]="picker"
+    (dateChange)="onDateChange($event)">
+<mat-datepicker #picker ></mat-datepicker>
+<div class="picker-toggle" (click)="picker.open()">
+    <mat-icon [inline]="true">keyboard_arrow_down</mat-icon>
+</div>

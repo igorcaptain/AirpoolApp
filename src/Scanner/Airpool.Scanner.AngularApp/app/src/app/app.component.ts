@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IconService } from './services/icon.service';
+import { AirLocation } from '../app/models';
+import { LocationService } from './services/location.service';
 
 @Component({
   selector: 'app-root',
@@ -10,25 +12,16 @@ import { IconService } from './services/icon.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  serverString: string = "";
-  locations: any[] = [];
   subscriptions: Subscription[] = [];
   
   constructor(
-    private httpClient: HttpClient,
-    private iconService: IconService
+    private iconService: IconService,
+    private locationService: LocationService
   ) { }
 
   ngOnInit(): void {
     this.iconService.registerIcons();
-    
-    this.subscriptions.push(this.httpClient.get("/api/v1/Scanner")
-      .subscribe((response: any) => this.serverString = response?.value)
-    );
-
-    this.subscriptions.push(this.httpClient.get("/api/v1/Scanner/locations")
-      .subscribe((response: any) => this.locations = response)
-    );
+    this.locationService.loadLocations();
   }
 
   ngOnDestroy(): void {

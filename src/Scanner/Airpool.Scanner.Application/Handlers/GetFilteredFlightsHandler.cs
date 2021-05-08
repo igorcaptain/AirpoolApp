@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Airpool.Scanner.Application.Handlers
 {
-    public class GetFilteredFlightsHandler : IRequestHandler<GetFilteredFlightsQuery, List<FilteredFlightResponse>>
+    public class GetFilteredFlightsHandler : IRequestHandler<GetFilteredFlightsQuery, FilteredFlightResponse>
     {
         private readonly IRepository<Flight> _flightsRepository;
 
@@ -22,9 +22,9 @@ namespace Airpool.Scanner.Application.Handlers
             _flightsRepository = flightsRepository;
         }
 
-        public async Task<List<FilteredFlightResponse>> Handle(GetFilteredFlightsQuery request, CancellationToken cancellationToken)
+        public async Task<FilteredFlightResponse> Handle(GetFilteredFlightsQuery request, CancellationToken cancellationToken)
         {
-            var result = new List<FilteredFlightResponse>();
+            FilteredFlightResponse result;
             var filter = request.FlightFilter;
 
             var filteredDepartureFlights = await _flightsRepository.GetAsync(f =>
@@ -45,21 +45,21 @@ namespace Airpool.Scanner.Application.Handlers
                     true,
                     with => with.StartLocation, with => with.EndLocation);
 
-                result.Add(new FilteredFlightResponse()
+                result = new FilteredFlightResponse()
                 {
                     Departure = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredDepartureFlights),
                     Arrival = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredArrivalFlights)
-                });
+                };
             }
             else
             {
                 var test = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredDepartureFlights);
 
-                result.Add(new FilteredFlightResponse()
+                result = new FilteredFlightResponse()
                 {
                     Departure = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredDepartureFlights),
                     Arrival = null
-                });
+                };
             }
             
             return result;
