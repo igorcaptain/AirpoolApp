@@ -12,6 +12,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
+using Airpool.Scanner.Infrastructure.Repositories.Base;
+using Airpool.Scanner.Core.Repository.Base;
+using Airpool.Scanner.Core.Generator;
+using Airpool.Scanner.Core.Generator.Base;
+using Airpool.Scanner.Core.Entities;
+using MediatR;
+using Airpool.Scanner.Application.Handlers;
+using System.Reflection;
 
 namespace Airpool.Scanner.API
 {
@@ -29,8 +37,19 @@ namespace Airpool.Scanner.API
         {
             services.AddControllers();
 
+            //services.AddCors();
+
             services.AddDbContext<ScannerContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("ScannerConnection")), ServiceLifetime.Singleton);
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddTransient<IEntityGenerator<Flight, Location>, FlightGenerator>();
+
+            //https://stackoverflow.com/questions/56415440/the-program-is-not-able-to-find-handler-for-mediatr-query-asp-net-core
+            var assembly = AppDomain.CurrentDomain.Load("Airpool.Scanner.Application");
+            services.AddMediatR(assembly);
+            services.AddAutoMapper(assembly);
 
             services.AddSwaggerGen(c =>
             {
@@ -49,6 +68,10 @@ namespace Airpool.Scanner.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            //app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
 
             app.UseEndpoints(endpoints =>
             {

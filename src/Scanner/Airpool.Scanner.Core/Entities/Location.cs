@@ -6,7 +6,7 @@ namespace Airpool.Scanner.Core.Entities
     {
         public string Name { get; set; }
         public string AirportName { get; set; }
-        public string TerminalName { get; set; }
+        //public string TerminalName { get; set; }
         public string IATA { get; set; }
         // geo
         public string Country { get; set; }

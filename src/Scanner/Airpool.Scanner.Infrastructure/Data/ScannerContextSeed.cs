@@ -1,8 +1,11 @@
 ﻿using Airpool.Scanner.Core.Entities;
+using Airpool.Scanner.Core.Generator.Base;
+using Airpool.Scanner.Infrastructure.Data.ThirdParty.TravelPayouts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,29 +13,35 @@ namespace Airpool.Scanner.Infrastructure.Data
 {
     public class ScannerContextSeed
     {
-        public static async Task SeedAsync(ScannerContext scannerContext, ILoggerFactory loggerFactory, int? retry = 0)
+        public static async Task SeedAsync(ScannerContext scannerContext, ILoggerFactory loggerFactory, IEntityGenerator<Flight, Location> entityGenerator, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
 
             try
             {
-                scannerContext.Database.Migrate();
-
-                if (!scannerContext.Locations.Any()) // if location table is empty -> seed database
+                if (!scannerContext.CabinClasses.Any())
                 {
                     scannerContext.CabinClasses.AddRange(GetPreconfiguredCabinClasses());
                     await scannerContext.SaveChangesAsync();
+                }
 
-                    scannerContext.Locations.AddRange(GetPreconfiguredLocations());
+                if (!scannerContext.Locations.Any())
+                {
+                    scannerContext.Locations.AddRange(await GetLocationsFromApi());
                     await scannerContext.SaveChangesAsync();
+                }
 
-                    scannerContext.Flights.AddRange(await GetPreconfiguredFlights(scannerContext));
+                if (!scannerContext.Flights.Any())
+                {
+                    scannerContext.Flights.AddRange(await entityGenerator.GenerateRandomEntities(await scannerContext.Locations.ToListAsync(), 500000));
                     await scannerContext.SaveChangesAsync();
+                }
 
+                if (!scannerContext.Tickets.Any())
+                {
                     scannerContext.Tickets.AddRange(await GetPreconfiguredTickets(scannerContext));
                     await scannerContext.SaveChangesAsync();
                 }
-                
             }
             catch (Exception ex)
             {
@@ -41,7 +50,7 @@ namespace Airpool.Scanner.Infrastructure.Data
                     retryForAvailability++;
                     var log = loggerFactory.CreateLogger<ScannerContextSeed>();
                     log.LogError(ex.Message);
-                    await SeedAsync(scannerContext, loggerFactory, retryForAvailability);
+                    await SeedAsync(scannerContext, loggerFactory, entityGenerator, retryForAvailability);
                 }
             }
         }
@@ -52,7 +61,9 @@ namespace Airpool.Scanner.Infrastructure.Data
         {
             return new List<CabinClass>()
             {
-                new CabinClass() { Name = "Econom" }
+                new CabinClass() { Name = "Economy" },
+                new CabinClass() { Name = "Business" },
+                new CabinClass() { Name = "First" }
             };
         }
 
@@ -99,12 +110,11 @@ namespace Airpool.Scanner.Infrastructure.Data
 
         private static async Task<IEnumerable<Ticket>> GetPreconfiguredTickets(ScannerContext scannerContext)
         {
-            IList<Flight> flights = await scannerContext.Flights.ToListAsync();
             return new List<Ticket>()
             {
                 new Ticket()
                 {
-                    FlightId = flights.Where(f => f.Name == "TestFlight#1337").FirstOrDefault().Id,
+                    FlightId = scannerContext.Flights.Include(f => f.StartLocation).Where(f => f.StartLocation.Country == "Ukraine").FirstOrDefault().Id,
                     CabinClassId = 1,
                     PassengerFirstName = "Valerii",
                     PassengerLastName = "Zhmyshenko",
@@ -114,6 +124,20 @@ namespace Airpool.Scanner.Infrastructure.Data
             };
         }
 
+        #endregion
+
+        #region GetThirdPartyData
+        private static async Task<IEnumerable<Location>> GetLocationsFromApi() =>
+            (await (new TravelPayoutsReader()).GetLocations())
+            .Select(tl => new Location() 
+            {
+                AirportName = tl.AirportName,
+                IATA = tl.IATA,
+                Country = tl.Country,
+                City = tl.City,
+                Latitude = tl.Latitude,
+                Longitude = tl.Longitude
+            });
         #endregion
     }
 }

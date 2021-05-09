@@ -7,13 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5F81910F-FB7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scanner", "Scanner", "{73045A32-062C-47CE-A816-F5DFBCACFA29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.Core", "src\Scanner\Airpool.Scanner.Core\Airpool.Scanner.Core.csproj", "{51694873-77BE-4396-8BE2-B7A89EFFF9F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airpool.Scanner.Core", "src\Scanner\Airpool.Scanner.Core\Airpool.Scanner.Core.csproj", "{51694873-77BE-4396-8BE2-B7A89EFFF9F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.Infrastructure", "src\Scanner\Airpool.Scanner.Infrastructure\Airpool.Scanner.Infrastructure.csproj", "{F8AD97B0-E170-45CA-B947-078E8DBFD9D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airpool.Scanner.Infrastructure", "src\Scanner\Airpool.Scanner.Infrastructure\Airpool.Scanner.Infrastructure.csproj", "{F8AD97B0-E170-45CA-B947-078E8DBFD9D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.Application", "src\Scanner\Airpool.Scanner.Application\Airpool.Scanner.Application.csproj", "{8755EE33-1E49-4C5B-ACFB-027C4A490C73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airpool.Scanner.Application", "src\Scanner\Airpool.Scanner.Application\Airpool.Scanner.Application.csproj", "{8755EE33-1E49-4C5B-ACFB-027C4A490C73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.API", "src\Scanner\Airpool.Scanner.API\Airpool.Scanner.API.csproj", "{C19F9FF6-691E-46E2-BB98-272875007E65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airpool.Scanner.API", "src\Scanner\Airpool.Scanner.API\Airpool.Scanner.API.csproj", "{C19F9FF6-691E-46E2-BB98-272875007E65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{36D01A6E-F7C2-479F-8C1B-811AA10CFA78}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Airpool.Scanner.Tests", "src\Tests\Airpool.Scanner.Tests\Airpool.Scanner.Tests.fsproj", "{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +41,10 @@ Global
 		{C19F9FF6-691E-46E2-BB98-272875007E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C19F9FF6-691E-46E2-BB98-272875007E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C19F9FF6-691E-46E2-BB98-272875007E65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +55,8 @@ Global
 		{F8AD97B0-E170-45CA-B947-078E8DBFD9D1} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
 		{8755EE33-1E49-4C5B-ACFB-027C4A490C73} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
 		{C19F9FF6-691E-46E2-BB98-272875007E65} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
+		{36D01A6E-F7C2-479F-8C1B-811AA10CFA78} = {5F81910F-FB71-4A40-83CD-9236724B9E8E}
+		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617} = {36D01A6E-F7C2-479F-8C1B-811AA10CFA78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8E7206D-C726-4A4D-A27D-F2F9B44265E3}

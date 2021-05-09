@@ -1,0 +1,5 @@
+<mat-select [(value)]="selectedId" (selectionChange)="onSelectionChange()">
+    <mat-option *ngFor="let searchOption of searchOptions" [value]="searchOption.id">
+        {{ searchOption.name }}
+      </mat-option>
+</mat-select>

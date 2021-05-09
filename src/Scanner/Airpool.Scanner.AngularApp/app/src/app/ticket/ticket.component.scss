@@ -1,0 +1,146 @@
+.ticket{
+    width: 100%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    position:static;
+}
+
+.ticket-header{
+    height:105px;
+    width: 100%;
+    padding: 15px 40px;
+    border-left: 4px solid #bfc2cb;
+    position: relative;
+}
+.ticket-header::before {
+    content: "";
+    border-left: 5px solid #272a33;
+    border-right: 5px solid #272a33;
+    position: absolute;
+    left: -4px;
+    right: 0;
+    height: 0;
+    z-index: 5;
+    border-bottom: 5px solid transparent;
+    top: -1px;
+}
+.ticket-header::after {
+    content: "";
+    border-left: 5px solid #272a33;
+    border-right: 5px solid #272a33;
+    position: absolute;
+    left: -4px;
+    right: 0;
+    height: 0;
+    z-index: 5;
+    border-top: 5px solid transparent;
+    bottom: -1px;
+}
+.ticket-body::before {
+    content: "";
+    border-left: 5px solid #272a33;
+    border-right: 5px solid #272a33;
+    position: absolute;
+    left: -4px;
+    right: 0;
+    height: 0;
+    z-index: 5;
+    border-bottom: 5px solid transparent;
+    top: -1px;
+}
+.ticket-body::after {
+    content: "";
+    border-left: 5px solid #272a33;
+    border-right: 5px solid #272a33;
+    position: absolute;
+    left: -4px;
+    right: 0;
+    height: 0;
+    z-index: 5;
+    border-top: 5px solid transparent;
+    bottom: -1px;
+}
+
+.bordered{
+    border-bottom: 1px dashed #a3a3a3;
+}
+
+.price-block{
+    float:right;
+    padding: 20px 40px;
+    background-color: #0088d4;
+    text-align: center;
+    //clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0% 100%);
+}
+.price{
+    color: #fff;
+    font-size: 1.25rem;
+    //font-weight: bold;
+}
+.price-block:hover{
+    cursor: pointer;
+}
+.company-name{
+    color: #000;
+    font-size: 1.15rem;
+    float: left;
+}
+.ticket-body{
+    width:100%;
+    display: inline-block;
+    border-left: 4px solid #0088d4;
+    position: relative;
+}
+.info-line{
+    padding: 15px 20px;
+    width:50%;
+    display: inline-block;
+}
+.info-text{
+    color:#646464;
+}
+.body-main{
+    display: flex;
+    background-color: #e9e9e9;
+    .info-line{
+        width:48%;
+    }
+}
+
+.city{
+    color:#0088d4;
+    font-size:1.1rem;
+    margin-right: 10px;
+}
+.airport{
+    color:#646464;
+
+}
+.airport::after{
+    margin-left:3px;
+    content: url('../../assets/pin.png');
+}
+
+.time{
+    font-size: 1.3rem;
+}
+
+.time-in-road{
+    font-size:1.15rem;
+}
+
+.icon-plane::before{
+    content: "";
+  display:inline-block;
+  height:16px;
+  width:16px;
+  background-size: 16px 16px;
+  background-image: url('../../assets/blue-plane.png');
+  background-repeat: no-repeat;
+  margin:0 auto;
+}
+.icon-place{
+    width: 4%;
+    text-align: right;
+    padding-top:42px;
+}

@@ -1,0 +1,34 @@
+<div class="wrap text-center">
+    Your tickets in any direction!
+</div>
+<form action="" class="form">
+    <div class="input-line">
+        <div class="form-element">
+            <label>FROM</label>
+            <app-input-autocomplete (locationChange)="onStartLocationChange($event)"></app-input-autocomplete>
+        </div>
+        <div class="form-element">
+            <label>TO</label>
+            <app-input-autocomplete (locationChange)="onEndLocationChange($event)"></app-input-autocomplete>
+        </div>
+        <div class="form-element">
+            <label>WHEN</label>
+            <app-input-datepicker (dateChange)="onWhenDateChange($event)"></app-input-datepicker>
+        </div>
+        <div class="form-element">
+            <label>RETURN</label>
+            <app-input-datepicker (dateChange)="onReturnDateChange($event)"></app-input-datepicker>
+        </div>
+        <div class="form-element">
+            <label>OPTION</label>
+            <app-input-select (selectChange)="onSearchOptionChange($event)"></app-input-select>
+        </div>
+    </div>
+    <div class="composite-root">Search composite route <span>- coming soon!</span></div>
+    <a 
+        [routerLink]="'result'" 
+        [queryParams]="getQueryParams()" 
+        class="search-submit-btn"
+        [class.disabled]="!isInputValid()"
+    >Search</a>
+</form>

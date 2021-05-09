@@ -1,0 +1,120 @@
+.text-center{
+    font-size:40px;
+    color: #fff;
+    text-align:center;
+    font-weight: lighter;
+    padding-top:50px;
+    padding-bottom:50px;
+    line-height: 60px;
+}
+
+.input-line{
+    //width: 100%;
+    margin: 0 auto;
+    width: 1050px;
+    height: 65px;
+    //background-color: #d76868;
+
+    display: flex;
+    justify-content: center;
+    //justify-content: space-between; 
+    //flex-grow: 1;
+
+    .form-element {
+        width: 210.2px;
+        //width: 200px;
+        //height: 100%;
+        background-color: #fff;
+        color: #8f9197;
+        font-size: 15px;
+        padding: 10px;
+        label {
+            font-size: 11px;
+            display: block;
+        }
+        
+        
+        border-right: 1px solid #191e27;
+    }
+
+    .form-element:first-child {
+        border-top-left-radius: 7px;
+        border-bottom-left-radius: 7px;
+    }
+
+    .form-element:last-child {
+        border: none;
+
+        border-top-right-radius: 7px;
+        border-bottom-right-radius: 7px;
+    }
+}
+
+/*
+.input-div{
+    height: 100%;
+    background-color: #fff;
+}
+
+.input-name{
+    color:  rgb(100, 100, 100);
+    text-transform: uppercase;
+    font-size: smaller;
+}
+
+.input{
+    width: 150px;
+    border: 0;
+}
+*/
+
+.composite-root {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+
+    span {
+        color: #fff;
+    }
+
+    color: #9a9ea9;
+    font: 15px "Open Sans",Arial,sans-serif;
+    font-weight: 400;
+
+    max-width: fit-content;
+    margin: 20px auto 30px auto;
+}
+
+.search-submit-btn {
+    // for <a>
+    display: block;
+    text-decoration: none;
+
+    max-width: 300px;
+    height: 60px;
+
+    font-size: 18px;
+    line-height: 60px;
+
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color .2s linear;
+    color: #fff;
+    background-color: #d76868;
+
+    &:active {
+        background-color: #d76868c2;
+    }
+}
+
+.form {
+    margin-bottom: 250px;
+}
+
+a.disabled {
+    background-color: #8d8a8a;
+    pointer-events: none;
+}
