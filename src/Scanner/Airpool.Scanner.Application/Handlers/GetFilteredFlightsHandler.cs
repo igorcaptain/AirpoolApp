@@ -57,7 +57,8 @@ namespace Airpool.Scanner.Application.Handlers
                 location.Id == filter.DestinationLocationId)).ToList();
 
             var generatedDepartureEntities = (await _entityGenerator.GenerateRandomEntities(locations, filter.OriginDateTime, 10))
-                    .Where(f => f.StartLocationId == filter.OriginLocationId);
+                    .Where(f => f.StartLocationId == filter.OriginLocationId)
+                    .OrderBy(f => f.StartDateTime);
             var filteredDepartureFlights = generatedDepartureEntities.Where(e => e.StartLocationId == filter.OriginLocationId)
                 .Select(f =>
                 {
@@ -69,7 +70,8 @@ namespace Airpool.Scanner.Application.Handlers
             if (filter.ReturnDateTime != null)
             {
                 var generatedArrivalEntities = (await _entityGenerator.GenerateRandomEntities(locations, ((DateTime)filter.ReturnDateTime), 10))
-                    .Where(f => f.StartLocationId == filter.OriginLocationId);
+                    .Where(f => f.StartLocationId == filter.OriginLocationId)
+                    .OrderBy(f => f.StartDateTime);
                 var filteredArrivalFlights = generatedArrivalEntities.Where(e => e.EndLocationId == filter.DestinationLocationId)
                 .Select(f =>
                 {
@@ -104,7 +106,7 @@ namespace Airpool.Scanner.Application.Handlers
                 f.StartLocationId == filter.OriginLocationId &&
                 f.EndLocationId == filter.DestinationLocationId &&
                 f.StartDateTime.Date == filter.OriginDateTime.Date,
-                null,
+                orderBy => orderBy.OrderBy(x => x.StartDateTime),
                 true,
                 with => with.StartLocation, with => with.EndLocation);
 
@@ -114,7 +116,7 @@ namespace Airpool.Scanner.Application.Handlers
                     f.StartLocationId == filter.DestinationLocationId &&
                     f.EndLocationId == filter.OriginLocationId &&
                     f.StartDateTime.Date == filter.ReturnDateTime.Value.Date,
-                    null,
+                    orderBy => orderBy.OrderBy(x => x.StartDateTime),
                     true,
                     with => with.StartLocation, with => with.EndLocation);
 
