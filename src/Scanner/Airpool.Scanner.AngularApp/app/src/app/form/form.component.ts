@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AirLocation } from '../models';
+import { AirLocation, SearchOptionEnum } from '../models';
 import { FlightFilter } from '../models/flight-filter.model';
 
 @Component({
@@ -15,6 +15,12 @@ export class FormComponent implements OnInit {
     destinationLocationId: '',
     returnDateTime: ''
   };
+
+  searchOption: SearchOptionEnum = SearchOptionEnum.Default;
+
+  getQueryParams(): any {
+    return {...this.flightFilter, searchOption: this.searchOption };
+  }
 
   constructor() { }
 
@@ -38,6 +44,11 @@ export class FormComponent implements OnInit {
   public onReturnDateChange(date: string): void {
     //console.log('selected return date: ', date);
     this.flightFilter.returnDateTime = date;
+  }
+
+  public onSearchOptionChange(value: SearchOptionEnum): void {
+    console.log('selected search option: ', value);
+    this.searchOption = value;
   }
 
   isInputValid(): boolean {

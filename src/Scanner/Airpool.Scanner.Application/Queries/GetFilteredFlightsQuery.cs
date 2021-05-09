@@ -1,4 +1,5 @@
-﻿using Airpool.Scanner.Application.Responses;
+﻿using Airpool.Scanner.Application.Options;
+using Airpool.Scanner.Application.Responses;
 using Airpool.Scanner.Core.Entities.Filters;
 using MediatR;
 using System;
@@ -13,9 +14,12 @@ namespace Airpool.Scanner.Application.Queries
     {
         public FlightFilter FlightFilter { get; }
 
-        public GetFilteredFlightsQuery(FlightFilter flightFilter)
+        public SearchOption SearchOption { get; }
+
+        public GetFilteredFlightsQuery(FlightFilter flightFilter, SearchOption searchOption)
         {
             FlightFilter = flightFilter;
+            SearchOption = searchOption;
         }
     }
 }

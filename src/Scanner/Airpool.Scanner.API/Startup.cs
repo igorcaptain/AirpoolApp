@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 using Airpool.Scanner.Infrastructure.Repositories.Base;
 using Airpool.Scanner.Core.Repository.Base;
-using Airpool.Scanner.Infrastructure.Data.Generator;
+using Airpool.Scanner.Core.Generator;
 using Airpool.Scanner.Core.Generator.Base;
 using Airpool.Scanner.Core.Entities;
 using MediatR;

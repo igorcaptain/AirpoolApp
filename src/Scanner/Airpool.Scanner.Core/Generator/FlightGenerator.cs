@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airpool.Scanner.Infrastructure.Data.Generator
+namespace Airpool.Scanner.Core.Generator
 {
 
     internal record GeoPoint
@@ -90,9 +90,19 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
     {
         public async Task<IList<Flight>> GenerateRandomEntities(IList<Location> locations, int count = 1)
         {
+            Random random = new Random();
             var filteredLocations = locations.Where(l => Options.FlightableRect.isInclude(l.Latitude, l.Longitude)).ToList();
+            var dateSeed = DateTime.Now
+                .AddDays(random.Next(1, 30))
+                .AddHours(random.Next(0, 24))
+                .AddMinutes(random.Next(0, 60));
+            return await GenerateRandomEntities(filteredLocations, dateSeed, count);
+        }
+
+        public async Task<IList<Flight>> GenerateRandomEntities(IList<Location> locations, DateTime dateSeed, int count = 1)
+        {
             List<Flight> flights = new();
-            var dateTime = DateTime.Now;
+            //var dateTime = DateTime.Now;
 
             int taskCount = 10;
             var tasks = Enumerable.Range(0, taskCount).Select(x =>
@@ -105,7 +115,7 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
 
                     while ((chunkFlights.Count() < count / taskCount) && attempt <= 100)
                     {
-                        var flight = GenerateRandomEntity(filteredLocations, dateTime, random);
+                        var flight = GenerateRandomEntity(locations, dateSeed, random);
                         if (!chunkFlights.Contains(flight))
                         {
                             chunkFlights.Add(flight);
@@ -119,11 +129,11 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
                 });
             }).ToList();
 
-            while(tasks.Any())
+            while (tasks.Any())
             {
                 var finishedTask = await Task.WhenAny(tasks);
                 tasks.Remove(finishedTask);
-                flights.AddRange(await finishedTask);   
+                flights.AddRange(await finishedTask);
             }
 
             return flights;
@@ -132,11 +142,21 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
         public Flight GenerateRandomEntity(IList<Location> locations)
         {
             Random random = new Random();
-            var filteredLocations = locations.Where(l => Options.FlightableRect.isInclude(l.Latitude, l.Longitude)).ToList();
-            return GenerateRandomEntity(filteredLocations, DateTime.Now, random);
+            var dateSeed = DateTime.Now
+                .AddDays(random.Next(1, 30))
+                .AddHours(random.Next(0, 24))
+                .AddMinutes(random.Next(0, 60));
+            return GenerateRandomEntity(locations, dateSeed);
         }
 
-        private Flight GenerateRandomEntity(IList<Location> locations, DateTime seedDateTime, Random random)
+        public Flight GenerateRandomEntity(IList<Location> locations, DateTime dateSeed)
+        {
+            Random random = new Random();
+            var filteredLocations = locations.Where(l => Options.FlightableRect.isInclude(l.Latitude, l.Longitude)).ToList();
+            return GenerateRandomEntity(filteredLocations, dateSeed, random);
+        }
+
+        private Flight GenerateRandomEntity(IList<Location> locations, DateTime startDate, Random random)
         {
             int attempt = 0;
             double distance;
@@ -152,9 +172,8 @@ namespace Airpool.Scanner.Infrastructure.Data.Generator
                     break;
             }
 
-            DateTime startDate = seedDateTime
-                .AddDays(random.Next(1, 30))
-                .AddHours(random.Next(0, 24))
+            startDate = startDate
+                .AddHours(random.Next(0, 23))
                 .AddMinutes(random.Next(0, 60));
 
             var distanceKm = distance / 1000;
