@@ -173,7 +173,7 @@ namespace Airpool.Scanner.Core.Generator
             }
 
             startDate = startDate
-                .AddHours(random.Next(0, 23))
+                .AddHours(random.Next(-startDate.Hour, 22 - startDate.Hour))
                 .AddMinutes(random.Next(0, 60));
 
             var distanceKm = distance / 1000;
@@ -184,7 +184,9 @@ namespace Airpool.Scanner.Core.Generator
                 StartDateTime = startDate,
                 EndDateTime = startDate.AddHours((distanceKm != 0) ? Options.Boeing767.Speed / distanceKm * 1.4 : 0),
                 StartLocationId = location1.Id,
-                EndLocationId = location2.Id
+                StartLocation = location1,
+                EndLocationId = location2.Id,
+                EndLocation = location2
             };
 
             return flight;
