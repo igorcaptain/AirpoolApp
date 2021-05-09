@@ -15,9 +15,7 @@ let getLocations() =
 
 [<Fact>]
 let ``Get one random entity from entity generator`` () =
-    let locations = new System.Collections.Generic.List<Location>();
-    locations.Add(new Location(AirportName = "Boryspil International Airport", IATA = "KBP", Country = "Ukraine", City = "Kyiv", Latitude = 50.341244, Longitude = 30.895206));
-    locations.Add(new Location(AirportName = "Wroclaw Airport", IATA = "WRO", Country = "Poland", City = "Wroclaw", Latitude = 51.10482, Longitude = 16.899403));
+    let locations = getLocations()
     let entity = entityGenerator.GenerateRandomEntity(locations, DateTime.Now)
     Assert.NotNull(entity);
 
@@ -37,16 +35,12 @@ let ``Check origin and destination locations of generated entity`` () =
 
 [<Fact>]
 let ``Get 10 random entities from entity generator`` () =
-    let locations = new System.Collections.Generic.List<Location>();
-    locations.Add(new Location(AirportName = "Boryspil International Airport", IATA = "KBP", Country = "Ukraine", City = "Kyiv", Latitude = 50.341244, Longitude = 30.895206));
-    locations.Add(new Location(AirportName = "Wroclaw Airport", IATA = "WRO", Country = "Poland", City = "Wroclaw", Latitude = 51.10482, Longitude = 16.899403));
+    let locations = getLocations()
     let entities = entityGenerator.GenerateRandomEntities(locations, DateTime.Now, 10) |> Async.AwaitTask |> Async.RunSynchronously
     Assert.Equal(entities.Count, 10);
 
 [<Fact>]
 let ``Get 100 random entities from entity generator`` () =
-    let locations = new System.Collections.Generic.List<Location>();
-    locations.Add(new Location(AirportName = "Boryspil International Airport", IATA = "KBP", Country = "Ukraine", City = "Kyiv", Latitude = 50.341244, Longitude = 30.895206));
-    locations.Add(new Location(AirportName = "Wroclaw Airport", IATA = "WRO", Country = "Poland", City = "Wroclaw", Latitude = 51.10482, Longitude = 16.899403));
+    let locations = getLocations()
     let entities = entityGenerator.GenerateRandomEntities(locations, DateTime.Now, 100) |> Async.AwaitTask |> Async.RunSynchronously
     Assert.Equal(entities.Count, 100);
