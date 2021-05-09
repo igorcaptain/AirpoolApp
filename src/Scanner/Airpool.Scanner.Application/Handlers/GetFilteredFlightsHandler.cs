@@ -98,7 +98,7 @@ namespace Airpool.Scanner.Application.Handlers
 
         private async Task<FilteredFlightResponse> GetFilteredFlightResponseFromCache(FlightFilter filter)
         {
-            FilteredFlightResponse result;
+            FilteredFlightResponse result = new();
 
             var filteredDepartureFlights = await _flightsRepository.GetAsync(f =>
                 f.StartLocationId == filter.OriginLocationId &&
@@ -118,16 +118,15 @@ namespace Airpool.Scanner.Application.Handlers
                     true,
                     with => with.StartLocation, with => with.EndLocation);
 
-                result = new FilteredFlightResponse()
-                {
-                    Departure = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredDepartureFlights),
-                    Arrival = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredArrivalFlights)
-                };
+                if (filteredDepartureFlights.Count > 0 && filteredArrivalFlights.Count > 0)
+                    result = new FilteredFlightResponse()
+                    {
+                        Departure = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredDepartureFlights),
+                        Arrival = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredArrivalFlights)
+                    };
             }
             else
             {
-                var test = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredDepartureFlights);
-
                 result = new FilteredFlightResponse()
                 {
                     Departure = FilteredFlightsMapper.Mapper.Map<List<FlightResponse>>(filteredDepartureFlights),

@@ -1,15 +1,27 @@
 
 <div class="wrap" style="display: flex">
-    <div class="sight-div"></div>
-    <div class="ticket-div">
-        <div class="flight-count"><span>{{ departureFlights.length + arrivalFlights.length }}</span> flights total</div>
 
-        <!-- <app-ticket></app-ticket>
-        <app-ticket></app-ticket> -->
-
-        <app-ticket *ngFor="let depFlight of departureFlights; let i = index"
-            [departureFlight]="depFlight"
-            [arrivalFlight]="arrivalFlights[i]"
-        ></app-ticket>
-    </div>
+    <ng-container *ngIf="departureFlights.length > 0; else noResult">
+        <div class="sight-div"></div>
+        <div class="ticket-div">
+            <div class="flight-count"><span>{{ departureFlights.length + arrivalFlights.length }}</span> flights total</div>
+            <app-ticket 
+                *ngFor="let depFlight of departureFlights; let i = index"
+                [departureFlight]="depFlight"
+                [arrivalFlight]="arrivalFlights[i]"
+            ></app-ticket>
+        </div>
+    </ng-container>
+    <ng-template #noResult>
+        
+        <div class="no-result">
+            <mat-icon [inline]="true">manage_search</mat-icon>
+            <div class="big">No results found</div>
+            <div class="small">We can't find any item matching your search</div>
+            <a 
+                [routerLink]="'/'" 
+                class="return-btn"
+            >Return</a>
+        </div>
+    </ng-template>
 </div>

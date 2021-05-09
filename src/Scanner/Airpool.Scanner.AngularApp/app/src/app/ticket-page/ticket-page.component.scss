@@ -38,3 +38,50 @@
 .wrap {
     margin-top: 20px;
 }
+
+.no-result {
+    margin: 0 auto;
+    color: #fff;
+    text-align: center;
+    font-weight: lighter;
+    padding-top: 150px;
+    padding-bottom: 50px;
+    line-height: 60px;
+
+    .big {
+        font-size: 40px;
+    }
+
+    .small {
+        font-size: 28px;
+        color: #8f9197;
+    }
+
+    mat-icon {
+        font-size: 96px;
+    }
+
+    .return-btn {
+        display: block;
+        text-decoration: none;
+
+        max-width: 150px;
+        height: 50px;
+
+        font-size: 18px;
+        line-height: 50px;
+
+        margin: 0 auto;
+        margin-top: 40px;
+        text-align: center;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color .2s linear;
+        color: #fff;
+        background-color: #d76868;
+
+        &:active {
+            background-color: #d76868c2;
+        }
+    }
+}
