@@ -36,11 +36,17 @@ let ``Check origin and destination locations of generated entity`` () =
 [<Fact>]
 let ``Get 10 random entities from entity generator`` () =
     let locations = getLocations()
-    let entities = entityGenerator.GenerateRandomEntities(locations, DateTime.Now, 10) |> Async.AwaitTask |> Async.RunSynchronously
+    let entities = 
+        entityGenerator.GenerateRandomEntities(locations, DateTime.Now, 10) 
+        |> Async.AwaitTask 
+        |> Async.RunSynchronously
     Assert.Equal(entities.Count, 10);
 
 [<Fact>]
 let ``Get 100 random entities from entity generator`` () =
     let locations = getLocations()
-    let entities = entityGenerator.GenerateRandomEntities(locations, DateTime.Now, 100) |> Async.AwaitTask |> Async.RunSynchronously
+    let entities = 
+        entityGenerator.GenerateRandomEntities(locations, DateTime.Now, 100) 
+        |> Async.AwaitTask 
+        |> Async.RunSynchronously
     Assert.Equal(entities.Count, 100);

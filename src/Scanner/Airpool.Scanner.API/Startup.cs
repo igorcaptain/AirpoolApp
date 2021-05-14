@@ -20,6 +20,7 @@ using Airpool.Scanner.Core.Entities;
 using MediatR;
 using Airpool.Scanner.Application.Handlers;
 using System.Reflection;
+using System.IO;
 
 namespace Airpool.Scanner.API
 {
@@ -54,6 +55,9 @@ namespace Airpool.Scanner.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Scanner API", Version = "v1" });
+
+                var filePath = Path.Combine(AppContext.BaseDirectory, "Airpool.Scanner.API.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 
