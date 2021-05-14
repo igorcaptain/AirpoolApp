@@ -1,10 +1,8 @@
 ﻿using Airpool.Scanner.Core.Entities;
 using Airpool.Scanner.Core.Generator.Base;
-using Airpool.Scanner.Core.Repository.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Airpool.Scanner.Core.Generator
