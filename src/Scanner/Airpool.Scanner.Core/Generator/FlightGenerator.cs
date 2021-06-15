@@ -1,10 +1,8 @@
 ﻿using Airpool.Scanner.Core.Entities;
 using Airpool.Scanner.Core.Generator.Base;
-using Airpool.Scanner.Core.Repository.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Airpool.Scanner.Core.Generator
@@ -88,6 +86,15 @@ namespace Airpool.Scanner.Core.Generator
 
     public class FlightGenerator : IEntityGenerator<Flight, Location>
     {
+        public int TaskCount { get; private set; } = 4;
+
+        public FlightGenerator(int taskCount)
+        {
+            TaskCount = taskCount;
+        }
+
+        public FlightGenerator() { }
+
         public async Task<IList<Flight>> GenerateRandomEntities(IList<Location> locations, int count = 1)
         {
             Random random = new Random();
@@ -102,18 +109,22 @@ namespace Airpool.Scanner.Core.Generator
         public async Task<IList<Flight>> GenerateRandomEntities(IList<Location> locations, DateTime dateSeed, int count = 1)
         {
             List<Flight> flights = new();
-            //var dateTime = DateTime.Now;
 
-            int taskCount = 10;
-            var tasks = Enumerable.Range(0, taskCount).Select(x =>
+            var tasks = Enumerable.Range(0, TaskCount).Select(x =>
             {
                 return Task.Run(() =>
                 {
                     List<Flight> chunkFlights = new();
-                    int attempt = 0;
-                    Random random = new Random();
+                    int chunkSize = (count % TaskCount == 0) 
+                        ? count / TaskCount 
+                        : (x < TaskCount - 1) 
+                            ? count / (TaskCount - 1) 
+                            : count - x * (count / (TaskCount - 1));
 
-                    while ((chunkFlights.Count() < count / taskCount) && attempt <= 100)
+                    Random random = new();
+                    int attempt = 0;
+
+                    while (chunkFlights.Count < chunkSize && attempt <= 100)
                     {
                         var flight = GenerateRandomEntity(locations, dateSeed, random);
                         if (!chunkFlights.Contains(flight))
