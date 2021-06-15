@@ -31,12 +31,12 @@ namespace Airpool.Scanner.Application.Handlers
         {
             List<DictionaryResponse> result = new();
 
-            var repositoryType = typeof(IRepository<>).MakeGenericType(dictionaryMap[request.DictionaryName]);
+            var repositoryType = typeof(IRepository<,>).MakeGenericType(dictionaryMap[request.DictionaryName]);
             var repository = _serviceProvider.GetService(repositoryType);
             
             switch(repository)
             {
-                case IRepository<Location> locationRepository:
+                case IRepository<Location, Guid> locationRepository:
                     result = (await locationRepository.GetAllAsync()).Select(l => new DictionaryResponse()
                     {
                         Id = l.Id.ToString(),

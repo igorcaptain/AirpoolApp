@@ -17,13 +17,13 @@ namespace Airpool.Scanner.Application.Handlers
 {
     public class GetFilteredFlightsHandler : IRequestHandler<GetFilteredFlightsQuery, FilteredFlightResponse>
     {
-        private readonly IRepository<Flight> _flightsRepository;
+        private readonly IRepository<Flight, Guid> _flightsRepository;
         private readonly IEntityGenerator<Flight, Location> _entityGenerator;
-        private readonly IRepository<Location> _locationsRepository;
+        private readonly IRepository<Location, Guid> _locationsRepository;
 
         public GetFilteredFlightsHandler(
-            IRepository<Flight> flightsRepository, 
-            IRepository<Location> locationsRepository, 
+            IRepository<Flight, Guid> flightsRepository, 
+            IRepository<Location, Guid> locationsRepository, 
             IEntityGenerator<Flight, Location> entityGenerator)
         {
             _flightsRepository = flightsRepository;

@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 
 namespace Airpool.Scanner.Core.Repository.Base
 {
-    public interface IRepository<T> where T : Entity
+    public interface IRepository<TEntity, TKey> where TEntity : Entity
     {
-        Task<IReadOnlyList<T>> GetAllAsync();
-        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
-        Task<IReadOnlyList<T>> GetAsync(
-            Expression<Func<T, bool>> predicate = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        Task<IReadOnlyList<TEntity>> GetAllAsync();
+        Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IReadOnlyList<TEntity>> GetAsync(
+            Expression<Func<TEntity, bool>> predicate = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool disableTracking = true,
             string includeString = null);
-        Task<IReadOnlyList<T>> GetAsync(
-            Expression<Func<T, bool>> predicate = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        Task<IReadOnlyList<TEntity>> GetAsync(
+            Expression<Func<TEntity, bool>> predicate = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool disableTracking = true,
-            params Expression<Func<T, object>>[] includes);
-        Task<T> GetByIdAsync(Guid id);
-        Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+            params Expression<Func<TEntity, object>>[] includes);
+        Task<TEntity> GetByIdAsync(TKey id);
+        Task<TEntity> AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }

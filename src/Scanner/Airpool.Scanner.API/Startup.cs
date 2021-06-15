@@ -43,7 +43,7 @@ namespace Airpool.Scanner.API
             services.AddDbContext<ScannerContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("ScannerConnection")), ServiceLifetime.Singleton);
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             services.AddTransient<IEntityGenerator<Flight, Location>, FlightGenerator>(serviceProvider => 
             {
