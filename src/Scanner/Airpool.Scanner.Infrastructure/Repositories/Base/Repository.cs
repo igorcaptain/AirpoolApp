@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Airpool.Scanner.Infrastructure.Repositories.Base
 {
-    public class Repository<T> : IRepository<T> where T : Entity
+    public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : Entity
     {
         protected readonly ScannerContext _dbContext;
 
@@ -20,22 +20,22 @@ namespace Airpool.Scanner.Infrastructure.Repositories.Base
             _dbContext = dbContext;
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task<IReadOnlyList<TEntity>> GetAllAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return await _dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbContext.Set<T>().Where(predicate).ToListAsync();
+            return await _dbContext.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
-        public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, 
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        public async Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate = null, 
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool disableTracking = true,
             string includeString = null)
         {
-            IQueryable<T> query = _dbContext.Set<T>();
+            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
             if (disableTracking)
                 query = query.AsNoTracking();
             if (!string.IsNullOrWhiteSpace(includeString))
@@ -45,12 +45,12 @@ namespace Airpool.Scanner.Infrastructure.Repositories.Base
             return await ((orderBy != null) ? orderBy(query) : query).ToListAsync();
         }
 
-        public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, 
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,  
+        public async Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate = null, 
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,  
             bool disableTracking = true,
-            params Expression<Func<T, object>>[] includes)
+            params Expression<Func<TEntity, object>>[] includes)
         {
-            IQueryable<T> query = _dbContext.Set<T>();
+            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
             if (disableTracking)
                 query = query.AsNoTracking();
             if (includes != null)
@@ -60,27 +60,27 @@ namespace Airpool.Scanner.Infrastructure.Repositories.Base
             return await ((orderBy != null) ? orderBy(query) : query).ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public async Task<TEntity> GetByIdAsync(TKey id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            return await _dbContext.Set<TEntity>().FindAsync(id);
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
-            _dbContext.Set<T>().Add(entity);
+            _dbContext.Set<TEntity>().Add(entity);
             await _dbContext.SaveChangesAsync();
             return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task UpdateAsync(TEntity entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(T entity)
+        public async Task DeleteAsync(TEntity entity)
         {
-            _dbContext.Set<T>().Remove(entity);
+            _dbContext.Set<TEntity>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
     }

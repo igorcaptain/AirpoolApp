@@ -16,9 +16,9 @@ namespace Airpool.Scanner.Application.Handlers
     public class GetLocationsHandler : IRequestHandler<GetLocationsQuery, List<LocationResponse>>
     {
         private readonly IMapper _mapper;
-        private readonly IRepository<Location> _locationRepository;
+        private readonly IRepository<Location, Guid> _locationRepository;
 
-        public GetLocationsHandler(IMapper mapper, IRepository<Location> locationRepository)
+        public GetLocationsHandler(IMapper mapper, IRepository<Location, Guid> locationRepository)
         {
             _mapper = mapper;
             _locationRepository = locationRepository;
