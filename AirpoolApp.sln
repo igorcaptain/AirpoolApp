@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airpool.Scanner.API", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{36D01A6E-F7C2-479F-8C1B-811AA10CFA78}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Airpool.Scanner.Tests", "src\Tests\Airpool.Scanner.Tests\Airpool.Scanner.Tests.fsproj", "{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Airpool.Scanner.Tests", "src\Tests\Airpool.Scanner.Tests\Airpool.Scanner.Tests.fsproj", "{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airpool.Scanner.Security", "src\Scanner\Airpool.Scanner.Security\Airpool.Scanner.Security.csproj", "{FBE77F4C-3DA6-45D1-8168-C7EB9CE7F5BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBE77F4C-3DA6-45D1-8168-C7EB9CE7F5BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBE77F4C-3DA6-45D1-8168-C7EB9CE7F5BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBE77F4C-3DA6-45D1-8168-C7EB9CE7F5BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBE77F4C-3DA6-45D1-8168-C7EB9CE7F5BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{C19F9FF6-691E-46E2-BB98-272875007E65} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
 		{36D01A6E-F7C2-479F-8C1B-811AA10CFA78} = {5F81910F-FB71-4A40-83CD-9236724B9E8E}
 		{50C4B169-F7C7-4FD9-AE8C-A66636DE5617} = {36D01A6E-F7C2-479F-8C1B-811AA10CFA78}
+		{FBE77F4C-3DA6-45D1-8168-C7EB9CE7F5BC} = {73045A32-062C-47CE-A816-F5DFBCACFA29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8E7206D-C726-4A4D-A27D-F2F9B44265E3}

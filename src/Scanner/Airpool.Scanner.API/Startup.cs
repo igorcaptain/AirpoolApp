@@ -21,6 +21,9 @@ using MediatR;
 using Airpool.Scanner.Application.Handlers;
 using System.Reflection;
 using System.IO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Airpool.Scanner.Security;
 
 namespace Airpool.Scanner.API
 {
@@ -37,6 +40,7 @@ namespace Airpool.Scanner.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAirpoolSecurity();
 
             //services.AddCors();
 
@@ -77,6 +81,7 @@ namespace Airpool.Scanner.API
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
