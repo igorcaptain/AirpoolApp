@@ -1,29 +1,20 @@
+using Airpool.Scanner.Core.Entities;
+using Airpool.Scanner.Core.Generator;
+using Airpool.Scanner.Core.Generator.Base;
+using Airpool.Scanner.Core.Repository.Base;
 using Airpool.Scanner.Infrastructure.Data;
+using Airpool.Scanner.Infrastructure.Repositories.Base;
+using Airpool.Scanner.Security;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
-using Airpool.Scanner.Infrastructure.Repositories.Base;
-using Airpool.Scanner.Core.Repository.Base;
-using Airpool.Scanner.Core.Generator;
-using Airpool.Scanner.Core.Generator.Base;
-using Airpool.Scanner.Core.Entities;
-using MediatR;
-using Airpool.Scanner.Application.Handlers;
-using System.Reflection;
+using System;
 using System.IO;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Airpool.Scanner.Security;
 
 namespace Airpool.Scanner.API
 {
@@ -40,7 +31,7 @@ namespace Airpool.Scanner.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAirpoolSecurity();
+            services.AddAirpoolSecurity(Configuration);
 
             //services.AddCors();
 

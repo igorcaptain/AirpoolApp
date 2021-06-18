@@ -1,4 +1,6 @@
-﻿using Airpool.Scanner.Security.Entities;
+﻿using Airpool.Scanner.Security.Contract;
+using Airpool.Scanner.Security.Entities;
+using Airpool.Scanner.Security.Impl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -6,10 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airpool.Scanner.Security.Web
 {
@@ -17,25 +16,27 @@ namespace Airpool.Scanner.Security.Web
     [Route("api/v1/[controller]")]
     public class SecurityController : Controller
     {
-        private List<User> users = new()
+        private readonly IUserService _userService;
+
+        public SecurityController(IUserService userService)
         {
-            new User() { Login = "admin@gmail.com", Password = "admin", Role = "admin" }
-        };
+            _userService = userService;
+        }
 
         // test
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Route("getlogin")]
+        [HttpGet("getlogin")]
         public IActionResult GetLogin()
         {
-            return Ok($"Ваш логин: {User.Identity.Name}");
+            return Ok($"Your login: {User.Identity.Name}");
         }
 
         // test
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "admin")]
-        [Route("getrole")]
+        [HttpGet("getrole")]
         public IActionResult GetRole()
         {
-            return Ok("Ваша роль: администратор");
+            return Ok("Your role is admin!");
         }
 
         [HttpPost("token")]
@@ -68,7 +69,10 @@ namespace Airpool.Scanner.Security.Web
 
         private ClaimsIdentity GetIdentity(string username, string password)
         {
-            User user = users.FirstOrDefault(x => x.Login == username && x.Password == password);
+            IList<User> users = _userService.GetUsers()
+                .Where(x => x.Login == username || x.Email == username)
+                .ToList();
+            User user = users.Where(x => HashHelper.Compare(x.Password, password)).FirstOrDefault();
 
             if (user != null)
             {
@@ -78,9 +82,7 @@ namespace Airpool.Scanner.Security.Web
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
                 };
 
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
                 return claimsIdentity;
             }

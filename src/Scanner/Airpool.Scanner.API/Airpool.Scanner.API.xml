@@ -21,6 +21,13 @@
             <remarks>This endpoint can be used for server healthcheck. If server is alive will return "Ok" in JSON format result.</remarks>
             <response code="200">Returns string which contains server status message</response>
         </member>
+        <member name="M:Airpool.Scanner.API.Controllers.ScannerController.AuthorizeHealthcheck">
+            <summary>
+            Returns a string "Ok" if server is alive and request is authorized
+            </summary>
+            <remarks>This endpoint can be used for server and authorization healthcheck. If server is alive and request is authorized will return "Ok" in JSON format result.</remarks>
+            <response code="200">Returns string which contains server status message</response>
+        </member>
         <member name="M:Airpool.Scanner.API.Controllers.ScannerController.FindFlights(Airpool.Scanner.Core.Entities.Filters.FlightFilter,Airpool.Scanner.Application.Options.SearchOption)">
             <summary>
             Retrieves a specific flights by flight filter

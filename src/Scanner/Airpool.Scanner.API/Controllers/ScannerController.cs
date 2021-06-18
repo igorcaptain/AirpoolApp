@@ -3,6 +3,7 @@ using Airpool.Scanner.Application.Queries;
 using Airpool.Scanner.Application.Responses;
 using Airpool.Scanner.Core.Entities.Filters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
@@ -34,6 +35,19 @@ namespace Airpool.Scanner.API.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<string>> Healthcheck()
+        {
+            return Ok(await Task.Run(() => new JsonResult("Ok")));
+        }
+
+        /// <summary>
+        /// Returns a string "Ok" if server is alive and request is authorized
+        /// </summary>
+        /// <remarks>This endpoint can be used for server and authorization healthcheck. If server is alive and request is authorized will return "Ok" in JSON format result.</remarks>
+        /// <response code="200">Returns string which contains server status message</response>
+        [HttpGet("authcheck")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<string>> AuthorizeHealthcheck()
         {
             return Ok(await Task.Run(() => new JsonResult("Ok")));
         }
